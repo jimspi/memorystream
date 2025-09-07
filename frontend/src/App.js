@@ -93,7 +93,6 @@ export default function MemoryStreamApp() {
   useEffect(() => {
     const token = localStorage.getItem('memorystream_token');
     if (token) {
-      // Auto-login with stored token
       loadDashboard();
     } else {
       setLoading(false);
@@ -130,7 +129,6 @@ export default function MemoryStreamApp() {
   );
 }
 
-// Loading Screen
 function LoadingScreen() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
@@ -143,7 +141,6 @@ function LoadingScreen() {
   );
 }
 
-// Authentication Screen
 function AuthScreen({ onAuth, setError, error }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -257,7 +254,6 @@ function AuthScreen({ onAuth, setError, error }) {
   );
 }
 
-// Sidebar Navigation
 function Sidebar({ currentView, setCurrentView, user }) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -330,7 +326,6 @@ function Sidebar({ currentView, setCurrentView, user }) {
   );
 }
 
-// Main Content Area
 function MainContent({ currentView, user }) {
   const renderView = () => {
     switch (currentView) {
@@ -356,7 +351,6 @@ function MainContent({ currentView, user }) {
   );
 }
 
-// Dashboard Component
 function Dashboard({ user }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -453,7 +447,6 @@ function Dashboard({ user }) {
   );
 }
 
-// Stat Card Component
 function StatCard({ title, value, icon: Icon, color }) {
   const colorClasses = {
     purple: 'bg-purple-500/20 text-purple-400',
@@ -477,7 +470,6 @@ function StatCard({ title, value, icon: Icon, color }) {
   );
 }
 
-// Memories View Component
 function MemoriesView() {
   const [memories, setMemories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -541,7 +533,6 @@ function MemoriesView() {
   );
 }
 
-// Memory Card Component
 function MemoryCard({ memory }) {
   return (
     <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
@@ -576,7 +567,6 @@ function MemoryCard({ memory }) {
   );
 }
 
-// Add Memory Form Component
 function AddMemoryForm({ onClose, onSuccess }) {
   const [formData, setFormData] = useState({
     content: '',
@@ -686,7 +676,6 @@ function AddMemoryForm({ onClose, onSuccess }) {
   );
 }
 
-// Search View Component
 function SearchView() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -755,7 +744,6 @@ function SearchView() {
   );
 }
 
-// Search Result Card Component
 function SearchResultCard({ result }) {
   return (
     <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
@@ -788,7 +776,6 @@ function SearchResultCard({ result }) {
   );
 }
 
-// Integrations View Component
 function IntegrationsView() {
   return (
     <div className="space-y-6">
@@ -797,110 +784,116 @@ function IntegrationsView() {
       <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
         <h3 className="text-xl font-semibold text-white mb-4">Available Integrations</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-<IntegrationCard
-         name="ChatGPT"
-         description="Connect your ChatGPT conversations"
-         status="available"
-         icon="🤖"
-       />
-<IntegrationCard
-         name="Claude"
-         description="Sync with Claude AI interactions"
-         status="available"
-         icon="🧠"
-       />
-<IntegrationCard
-         name="Google Bard"
-         description="Import Bard conversation history"
-         status="coming-soon"
-         icon="🌟"
-       />
-</div>
-</div>
+          <IntegrationCard
+            name="ChatGPT"
+            description="Connect your ChatGPT conversations"
+            status="available"
+            icon="🤖"
+          />
+          <IntegrationCard
+            name="Claude"
+            description="Sync with Claude AI interactions"
+            status="available"
+            icon="🧠"
+          />
+          <IntegrationCard
+            name="Google Bard"
+            description="Import Bard conversation history"
+            status="coming-soon"
+            icon="🌟"
+          />
+        </div>
+      </div>
   <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-    <h3 className="text-xl font-semibold text-white mb-4">Developer API</h3>
-    <p className="text-slate-400 mb-4">
-      Use our API to integrate MemoryStream with your own AI applications.
-    </p>
-    <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400">
-      <p>POST /api/external/memories/context</p>
-      <p className="mt-2 text-slate-500">// Get relevant context for AI interactions</p>
-    </div>
-  </div>
-</div>
-  );
+       <h3 className="text-xl font-semibold text-white mb-4">Developer API</h3>
+       <p className="text-slate-400 mb-4">
+         Use our API to integrate MemoryStream with your own AI applications.
+       </p>
+       <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400">
+         <p>POST /api/external/memories/context</p>
+         <p className="mt-2 text-slate-500">// Get relevant context for AI interactions</p>
+       </div>
+     </div>
+   </div>
+ );
 }
-// Integration Card Component
-function IntegrationCard({ name, description, status, icon }) {
-return (
-<div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
-<div className="flex items-center space-x-3 mb-3">
-<span className="text-2xl">{icon}</span>
-<div>
-<h4 className="text-white font-medium">{name}</h4>
-<p className="text-slate-400 text-sm">{description}</p>
-</div>
-</div>
-<button
-className={w-full py-2 px-4 rounded-lg text-sm font-medium ${           status === 'available'             ? 'bg-purple-600 hover:bg-purple-700 text-white'             : 'bg-slate-600 text-slate-400 cursor-not-allowed'         }}
-disabled={status !== 'available'}
->
-{status === 'available' ? 'Connect' : 'Coming Soon'}
-</button>
-</div>
-);
-}
-// Settings View Component
-function SettingsView({ user }) {
-return (
-<div className="space-y-6">
-<h1 className="text-3xl font-bold text-white">Settings</h1>
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-      <h3 className="text-xl font-semibold text-white mb-4">Privacy & Security</h3>
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white font-medium">End-to-End Encryption</p>
-            <p className="text-slate-400 text-sm">Your memories are encrypted with your keys</p>
-          </div>
-          <div className="flex items-center">
-            <Shield className="w-5 h-5 text-green-400" />
-            <span className="ml-2 text-green-400 text-sm">Enabled</span>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white font-medium">Cross-Platform Sync</p>
-            <p className="text-slate-400 text-sm">Sync memories across devices</p>
-          </div>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" className="sr-only peer" defaultChecked />
-            <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-          </label>
-        </div>
-      </div>
-    </div>
 
-    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-      <h3 className="text-xl font-semibold text-white mb-4">Account Information</h3>
-      <div className="space-y-3">
-        <div>
-          <p className="text-slate-400 text-sm">Name</p>
-          <p className="text-white">{user.name}</p>
-        </div>
-        <div>
-          <p className="text-slate-400 text-sm">Email</p>
-          <p className="text-white">{user.email}</p>
-        </div>
-        <div>
-          <p className="text-slate-400 text-sm">Member Since</p>
-          <p className="text-white">{new Date(user.joinedAt).toLocaleDateString()}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-);
+function IntegrationCard({ name, description, status, icon }) {
+ return (
+   <div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
+     <div className="flex items-center space-x-3 mb-3">
+       <span className="text-2xl">{icon}</span>
+       <div>
+         <h4 className="text-white font-medium">{name}</h4>
+         <p className="text-slate-400 text-sm">{description}</p>
+       </div>
+     </div>
+     <button
+       className={`w-full py-2 px-4 rounded-lg text-sm font-medium ${
+         status === 'available'
+           ? 'bg-purple-600 hover:bg-purple-700 text-white'
+           : 'bg-slate-600 text-slate-400 cursor-not-allowed'
+       }`}
+       disabled={status !== 'available'}
+     >
+       {status === 'available' ? 'Connect' : 'Coming Soon'}
+     </button>
+   </div>
+ );
 }
+
+function SettingsView({ user }) {
+ return (
+   <div className="space-y-6">
+     <h1 className="text-3xl font-bold text-white">Settings</h1>
+
+     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+         <h3 className="text-xl font-semibold text-white mb-4">Privacy & Security</h3>
+         <div className="space-y-4">
+           <div className="flex items-center justify-between">
+             <div>
+               <p className="text-white font-medium">End-to-End Encryption</p>
+               <p className="text-slate-400 text-sm">Your memories are encrypted with your keys</p>
+             </div>
+             <div className="flex items-center">
+               <Shield className="w-5 h-5 text-green-400" />
+               <span className="ml-2 text-green-400 text-sm">Enabled</span>
+             </div>
+           </div>
+           
+           <div className="flex items-center justify-between">
+             <div>
+               <p className="text-white font-medium">Cross-Platform Sync</p>
+               <p className="text-slate-400 text-sm">Sync memories across devices</p>
+             </div>
+             <label className="relative inline-flex items-center cursor-pointer">
+               <input type="checkbox" className="sr-only peer" defaultChecked />
+               <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+             </label>
+           </div>
+         </div>
+       </div>
+
+       <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+         <h3 className="text-xl font-semibold text-white mb-4">Account Information</h3>
+         <div className="space-y-3">
+           <div>
+             <p className="text-slate-400 text-sm">Name</p>
+             <p className="text-white">{user.name}</p>
+           </div>
+           <div>
+             <p className="text-slate-400 text-sm">Email</p>
+             <p className="text-white">{user.email}</p>
+           </div>
+           <div>
+             <p className="text-slate-400 text-sm">Member Since</p>
+             <p className="text-white">{new Date(user.joinedAt).toLocaleDateString()}</p>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ );
+}
+
